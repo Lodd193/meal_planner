@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/users/lod19/.claude/projects/C--users-lod19-meal-planner/memory//**)",
+      "Read(//c/users/lod19/.claude/projects/C--users-lod19-meal-planner/memory/**)",
+      "Bash(gh repo *)",
+      "Bash(gh api *)",
+      "Bash(npx create-next-app@latest *)",
+      "Bash(mv plan.md ../plan.md.bak)",
+      "Bash(mv progress.md ../progress.md.bak)"
+    ]
+  }
+}
