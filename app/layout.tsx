@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col pb-16 lg:pb-0">
+      <body className="min-h-full flex flex-col pb-16">
         <NavBar />
         {children}
         <BottomNav />

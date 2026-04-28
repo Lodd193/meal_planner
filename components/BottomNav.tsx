@@ -65,7 +65,7 @@ export default function BottomNav() {
 
   return (
     <nav
-      className="lg:hidden fixed bottom-0 left-0 right-0 z-50 border-t"
+      className="fixed bottom-0 left-0 right-0 z-50 border-t"
       style={{
         background: 'linear-gradient(180deg, #2D232E 0%, #1e181f 100%)',
         borderColor: 'rgba(255,255,255,0.08)',

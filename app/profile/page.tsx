@@ -116,7 +116,7 @@ export default async function ProfilePage() {
         <Button type="submit" className="w-full">Save changes</Button>
       </form>
 
-      <div className="lg:hidden pt-2 border-t">
+      <div className="pt-2 border-t">
         <SignOutButton variant="page" />
       </div>
     </main>
