@@ -15,7 +15,7 @@ export default function NavLinks() {
   const pathname = usePathname()
 
   return (
-    <nav className="hidden md:flex items-center gap-1">
+    <nav className="hidden lg:flex items-center gap-1">
       {navLinks.map(({ href, label }) => {
         const active = pathname === href || pathname.startsWith(href + '/')
         return (
