@@ -3,7 +3,8 @@ import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { deleteRecipe, toggleFavourite, bulkLogMeals } from '../actions'
+import { deleteRecipe, bulkLogMeals } from '../actions'
+import FavouriteButton from './_components/FavouriteButton'
 import LogToRangeForm from './_components/LogToRangeForm'
 
 function parseSteps(instructions: string): string[] {
@@ -91,14 +92,7 @@ export default async function RecipeDetailPage({ params }: { params: Promise<{ i
             }}>
               <Button size="sm" type="submit" className="w-full sm:w-auto">Log today</Button>
             </form>
-            <form action={async () => {
-              'use server'
-              await toggleFavourite(id, recipe.is_favourite ?? false)
-            }}>
-              <Button variant="outline" size="sm" type="submit" className="w-full sm:w-auto">
-                {recipe.is_favourite ? '★ Saved' : '☆ Save'}
-              </Button>
-            </form>
+            <FavouriteButton recipeId={id} isFavourite={recipe.is_favourite ?? false} />
             <Link href={`/recipes/${id}/edit`} className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}>Edit</Link>
             <form action={async () => {
               'use server'

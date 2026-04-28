@@ -16,9 +16,9 @@ type SpendLog = {
 
 const CATEGORIES = ['Groceries', 'Eating out', 'Takeaway', 'Drinks', 'Other']
 
-export default function SpendLogList({ logs, defaultDate }: { logs: SpendLog[]; defaultDate: string }) {
+export default function SpendLogList({ logs: initial, defaultDate }: { logs: SpendLog[]; defaultDate: string }) {
+  const [logs, setLogs] = useState(initial)
   const [pending, setPending] = useState(false)
-  const [deletingId, setDeletingId] = useState<string | null>(null)
 
   async function handleAdd(formData: FormData) {
     setPending(true)
@@ -26,10 +26,9 @@ export default function SpendLogList({ logs, defaultDate }: { logs: SpendLog[]; 
     setPending(false)
   }
 
-  async function handleDelete(id: string) {
-    setDeletingId(id)
-    await deleteSpendLog(id)
-    setDeletingId(null)
+  function handleDelete(id: string) {
+    setLogs(prev => prev.filter(l => l.id !== id))
+    deleteSpendLog(id)
   }
 
   return (
@@ -85,10 +84,9 @@ export default function SpendLogList({ logs, defaultDate }: { logs: SpendLog[]; 
                 <button
                   type="button"
                   onClick={() => handleDelete(log.id)}
-                  disabled={deletingId === log.id}
                   className="text-muted-foreground hover:text-destructive text-xs transition-colors"
                 >
-                  {deletingId === log.id ? '…' : 'Delete'}
+                  Delete
                 </button>
               </div>
             </div>

@@ -1,6 +1,6 @@
 # Meal Planner App — Progress
 
-## Status: Phase 7 ✅ Complete
+## Status: Phase 8 ✅ Complete — Phase 9 next
 
 ---
 
@@ -73,6 +73,39 @@
 - [x] `app/spend-log/page.tsx` — monthly view with prev/next navigator, total, entries
 - [x] `app/dashboard/page.tsx` — spend_logs included in week/month spend totals
 - [x] "Spend" link added to NavBar
+
+## Phase 8 — Performance ✅ Complete
+- [x] `app/dashboard/loading.tsx` — skeleton stat cards + macro bars
+- [x] `app/recipes/loading.tsx` — skeleton recipe cards (6-up grid)
+- [x] `app/planner/loading.tsx` — skeleton calendar grid
+- [x] `app/spend-log/loading.tsx` — skeleton chart + total + list
+- [x] `app/shopping-list/loading.tsx` — skeleton category groups
+- [x] `FavouriteButton.tsx` — optimistic toggle (instant star, no page reload)
+- [x] `MealLogList.tsx` — optimistic delete (item + totals update instantly)
+- [x] `SpendLogList.tsx` — optimistic delete (item removed immediately)
+
+## Phase 9 — Recipe Tagging & Search
+- [ ] **DB migration:** `alter table recipes add column tags text[] default '{}'; create index recipes_tags_gin on recipes using gin(tags);`
+- [ ] Tag input component (free-text chips with common suggestions) — used in RecipeForm
+- [ ] Tag pills on RecipeCard and recipe detail header
+- [ ] Filter bar on `/recipes` — tag filter + title search, state via URL params
+- [ ] `?tag=X&q=search` query params handled server-side in recipes page
+- [ ] Update `types/supabase.ts` to include `tags` on recipes Row/Insert/Update
+
+## Phase 10 — Notifications & Nudges
+- [ ] Dashboard nudge: show banner if no meals logged today
+- [ ] Logging streak: count consecutive days with ≥1 log, display on dashboard
+- [ ] Budget alert: warning card when weekly spend > 90% of weekly_budget
+- [ ] Web Push: service worker + push subscription storage + Vercel cron job
+- [ ] Profile page: opt-in toggle + reminder time picker for push notifications
+
+## Phase 11 — Barcode Scanning
+- [ ] Install `@zxing/browser`
+- [ ] `BarcodeScanner` client component — opens camera, decodes barcode, calls lookup
+- [ ] `/api/barcode/[code]` route handler — fetches Open Food Facts API, returns name + macros
+- [ ] Integrate scan button into RecipeForm ingredient rows
+- [ ] Auto-fill ingredient name, unit, and per-unit nutrition from scan result
+- [ ] Fallback UI when camera not available or barcode not in Open Food Facts
 
 ---
 
