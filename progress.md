@@ -1,6 +1,6 @@
 # Meal Planner App — Progress
 
-## Status: Phase 12 ✅ Complete — Phases 13–15 next (mobile nav, images, donut chart)
+## Status: Phase 13 ✅ Complete — Phases 14–15 next (recipe images, donut chart)
 
 ---
 
@@ -112,10 +112,12 @@
 - [x] Empty states — SVG illustration + CTA on recipes list, day view (meals), shopping list
 - [x] Smooth page transitions — experimental.viewTransition: true in next.config
 
-## Phase 13 — Mobile Bottom Nav
-- [ ] Fixed bottom tab bar on mobile (Recipes / Planner / Spend / Profile + icons)
-- [ ] Top nav hidden on mobile, bottom nav hidden on desktop
-- [ ] Active tab detection via usePathname()
+## Phase 13 — Mobile Bottom Nav ✅ Complete
+- [x] Fixed bottom tab bar on mobile (Recipes / Planner / Shopping / Spend / Profile + SVG icons)
+- [x] Top nav links + sign-out hidden on mobile; bottom nav hidden on desktop (md:hidden)
+- [x] Active tab detection via usePathname(); Planner tab deep-links to today
+- [x] iPhone safe-area-inset-bottom padding for notch support
+- [x] Sign-out moved to Profile page on mobile (variant prop on SignOutButton)
 
 ## Phase 14 — Recipe Images
 - [ ] DB migration: `cover_image_url` column on `recipes`
