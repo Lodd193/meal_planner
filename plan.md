@@ -114,17 +114,17 @@ RLS enabled on all user-scoped tables.
 - Auto-fills ingredient name, unit (g/ml), and nutrition fields; user adjusts quantity
 - Graceful fallback to manual entry if camera unavailable or barcode not found
 
-### Phase 12 — Quick Wins (Polish)
-- **Active nav highlighting** — current route gets a visual indicator in the NavBar (underline or lightened pill); uses `usePathname()` in a client wrapper
-- **Empty states** — replace plain text "no recipes / nothing logged" messages with SVG illustration + CTA button; affects recipes list, day view, shopping list
-- **Smooth page transitions** — Next.js View Transitions API (`viewTransition: true` in next.config); one-line change, native-app feel between routes
+### Phase 12 — Quick Wins (Polish) ✅ Complete
+- **Active nav highlighting** — `NavLinks` client component, `usePathname()` highlights current route with frosted pill
+- **Empty states** — SVG illustration + description + CTA on recipes list, day view, shopping list
+- **Smooth page transitions** — `experimental.viewTransition: true` in next.config; crossfade between all routes
 
-### Phase 13 — Mobile Bottom Nav
-- Fixed bottom tab bar replacing (or supplementing) the top nav on small screens
-- Tabs: Recipes / Planner / Spend / Profile — each with a small icon + label
-- Hides on desktop (`md:hidden`), top nav hides on mobile (`hidden md:flex`)
-- Active tab highlighted; uses `usePathname()` for current route detection
-- Planner tab deep-links to today's date
+### Phase 13 — Bottom Nav ✅ Complete
+- Fixed bottom tab bar always visible (Recipes / Diary / Shop / Spend / Profile + SVG icons)
+- Top nav simplified to brand-only header; bottom nav handles all navigation on all screen sizes
+- Active tab highlighted via `usePathname()`; iPhone safe-area-inset-bottom padding
+- Diary tab links to `/planner` calendar overview
+- Sign-out button on Profile page (prominent destructive style with icon)
 
 ### Phase 14 — Recipe Images
 - Add `cover_image_url text` column to `recipes` table (Supabase migration)
@@ -134,12 +134,11 @@ RLS enabled on all user-scoped tables.
 - Recipe detail page shows full-width hero image in header
 - Optional: auto-fetch OG image from `source_url` during URL import
 
-### Phase 15 — Macro Donut on Recipe Detail
-- Replace plain progress bars on recipe detail with an animated SVG donut chart
-- Shows protein / carbs / fat split as coloured arc segments
-- Centre label shows total kcal per serving
-- Hover/tap on a segment shows grams + % of total macros
-- Falls back to plain bars if no macro data
+### Phase 15 — Macro Donut on Recipe Detail ✅ Complete
+- Pure SVG donut (strokeDasharray arcs) showing protein/carbs/fat split; kcal in centre
+- Hover thickens arc segment and scales legend dot; legend shows grams + % of macro split
+- Gunmetal/amber/sage colour scheme matches design system
+- Falls back to kcal+cost stat grid when only calorie data available (no macro breakdown)
 
 ---
 

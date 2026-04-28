@@ -1,6 +1,6 @@
 # Meal Planner App — Progress
 
-## Status: Phase 15 ✅ Complete — Phase 14 (recipe images) needs Supabase migration
+## Status: Phases 12–13 + 15 ✅ Complete — Phase 14 (recipe images) needs Supabase migration
 
 ---
 
@@ -112,12 +112,13 @@
 - [x] Empty states — SVG illustration + CTA on recipes list, day view (meals), shopping list
 - [x] Smooth page transitions — experimental.viewTransition: true in next.config
 
-## Phase 13 — Mobile Bottom Nav ✅ Complete
-- [x] Fixed bottom tab bar on mobile (Recipes / Planner / Shopping / Spend / Profile + SVG icons)
-- [x] Top nav links + sign-out hidden on mobile; bottom nav hidden on desktop (md:hidden)
-- [x] Active tab detection via usePathname(); Planner tab deep-links to today
-- [x] iPhone safe-area-inset-bottom padding for notch support
-- [x] Sign-out moved to Profile page on mobile (variant prop on SignOutButton)
+## Phase 13 — Bottom Nav ✅ Complete
+- [x] Fixed bottom tab bar (Recipes / Diary / Shop / Spend / Profile + SVG icons), always visible
+- [x] Top nav simplified to brand header only; bottom nav handles all navigation
+- [x] Active tab detection via usePathname(); safe-area-inset-bottom for iPhone notch
+- [x] Sign-out button on Profile page (full-width outlined destructive style with icon)
+- [x] "Diary" tab links to /planner calendar overview (not deep-linked to today)
+- [x] Body pb-16 ensures content never hides behind nav
 
 ## Phase 14 — Recipe Images
 - [ ] DB migration: `cover_image_url` column on `recipes`
