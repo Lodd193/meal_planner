@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { createRecipe, updateRecipe } from '../actions'
 import TagInput from './TagInput'
+import BarcodeScanner from './BarcodeScanner'
 
 type IngredientRow = {
   localId: string
@@ -106,9 +107,37 @@ export default function RecipeForm({ recipe, importedData }: Props) {
   })
   const [error, setError] = useState<string | null>(null)
   const [isPending, startTransition] = useTransition()
+  const [scanningRowId, setScanningRowId] = useState<string | null>(null)
+  const [scanNote, setScanNote] = useState<string | null>(null)
 
   function updateRow(localId: string, field: keyof IngredientRow, value: string) {
     setRows(prev => prev.map(r => r.localId === localId ? { ...r, [field]: value } : r))
+  }
+
+  async function handleScanResult(barcode: string) {
+    const rowId = scanningRowId
+    setScanningRowId(null)
+    if (!rowId) return
+    setScanNote('Looking up product…')
+    try {
+      const res = await fetch(`/api/barcode/${barcode}`)
+      const data = await res.json()
+      if (!res.ok || data.error) {
+        setScanNote('Product not found — fill in manually.')
+        return
+      }
+      if (data.name) updateRow(rowId, 'name', data.name)
+      updateRow(rowId, 'unit', 'g')
+      const per = (v: number | null) => v != null ? String((v / 100).toFixed(3)) : ''
+      if (data.kcal_per_100g != null) updateRow(rowId, 'kcal_per_unit', per(data.kcal_per_100g))
+      if (data.protein_per_100g != null) updateRow(rowId, 'protein_per_unit', per(data.protein_per_100g))
+      if (data.carbs_per_100g != null) updateRow(rowId, 'carbs_per_unit', per(data.carbs_per_100g))
+      if (data.fat_per_100g != null) updateRow(rowId, 'fat_per_unit', per(data.fat_per_100g))
+      setScanNote('Filled from barcode — set quantity in grams.')
+    } catch {
+      setScanNote('Lookup failed — fill in manually.')
+    }
+    setTimeout(() => setScanNote(null), 5000)
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -186,6 +215,9 @@ export default function RecipeForm({ recipe, importedData }: Props) {
       {/* Ingredients */}
       <div className="space-y-3">
         <h2 className="font-medium">Ingredients</h2>
+        {scanNote && (
+          <p className="text-xs text-muted-foreground px-1">{scanNote}</p>
+        )}
         <div className="overflow-x-auto">
           <div className="min-w-[700px]">
             <div className="grid grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_auto] gap-2 text-xs text-muted-foreground px-1 mb-1">
@@ -202,7 +234,17 @@ export default function RecipeForm({ recipe, importedData }: Props) {
                 <Input type="number" min="0" step="0.1" placeholder="0" value={row.carbs_per_unit} onChange={e => updateRow(row.localId, 'carbs_per_unit', e.target.value)} />
                 <Input type="number" min="0" step="0.1" placeholder="0" value={row.fat_per_unit} onChange={e => updateRow(row.localId, 'fat_per_unit', e.target.value)} />
                 <Input type="number" min="0" step="0.01" placeholder="0" value={row.price_per_unit} onChange={e => updateRow(row.localId, 'price_per_unit', e.target.value)} />
-                <Button type="button" variant="ghost" size="sm" onClick={() => setRows(p => p.filter(r => r.localId !== row.localId))} disabled={rows.length === 1}>×</Button>
+                <div className="flex gap-0.5">
+                  <Button
+                    type="button" variant="ghost" size="sm"
+                    onClick={() => setScanningRowId(row.localId)}
+                    title="Scan barcode"
+                    className="text-muted-foreground hover:text-foreground px-2"
+                  >
+                    ▦
+                  </Button>
+                  <Button type="button" variant="ghost" size="sm" onClick={() => setRows(p => p.filter(r => r.localId !== row.localId))} disabled={rows.length === 1}>×</Button>
+                </div>
               </div>
             ))}
           </div>
@@ -211,6 +253,13 @@ export default function RecipeForm({ recipe, importedData }: Props) {
           + Add ingredient
         </Button>
       </div>
+
+      {scanningRowId && (
+        <BarcodeScanner
+          onResult={handleScanResult}
+          onClose={() => setScanningRowId(null)}
+        />
+      )}
 
       {error && <p className="text-sm text-red-500">{error}</p>}
 

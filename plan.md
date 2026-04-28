@@ -83,11 +83,36 @@ RLS enabled on all user-scoped tables.
 - "Bulk schedule" panel on planner page — recipe picker + date range + servings + meal type
 - "Create new recipe" inline within bulk schedule panel
 
-### Phase 7 — Spend Log
-- **Requires DB migration first** — run SQL in Supabase before building (see progress.md)
-- `/spend-log` page — monthly view with navigator, entry list, add form
+### Phase 7 — Spend Log ✅ Complete
+- `/spend-log` page — monthly view with prev/next navigator, rolling 12-month bar chart (click to navigate), entry list + add form
 - Dashboard updated to include spend_logs in week/month spend totals
 - "Spend" added to NavBar
+
+### Phase 8 — Performance
+- `loading.tsx` files on slow server routes (recipes, planner, spend-log, shopping-list)
+- Suspense boundaries around data-heavy sections within pages
+- Optimistic UI for low-stakes mutations: favourite toggle, meal delete, spend delete
+- Prefetch key links (today's planner page, recipes list) on dashboard hover
+
+### Phase 9 — Recipe Tagging & Search
+- **Requires DB migration:** `alter table recipes add column tags text[] default '{}'; create index recipes_tags_gin on recipes using gin(tags);`
+- Tag input on recipe create/edit form — free-text with common suggestions (Vegetarian, Vegan, High Protein, Quick, Dairy-free, etc.)
+- Tag pills on recipe cards and detail page
+- Filter bar on `/recipes` — filter by one or more tags, plus text search on title
+- Tag-based filter passed as URL `?tag=X` param (server-side, no client state)
+
+### Phase 10 — Notifications & Nudges
+- In-app nudge on dashboard: "You haven't logged anything today" if no meal_logs for today
+- Logging streak counter: consecutive days with at least one log
+- Web Push notifications (service worker + Vercel cron) — opt-in reminder at user-chosen time (e.g. 7pm "Don't forget to log dinner")
+- Budget alert: dashboard warning when weekly spend exceeds 90% of budget
+
+### Phase 11 — Barcode Scanning
+- Barcode scan button on each ingredient row in RecipeForm — opens camera via Web API
+- `@zxing/browser` for camera-based barcode decoding (no native app needed)
+- Open Food Facts API lookup by barcode → ingredient name + per-100g macros
+- Auto-fills ingredient name, unit (g/ml), and nutrition fields; user adjusts quantity
+- Graceful fallback to manual entry if camera unavailable or barcode not found
 
 ---
 

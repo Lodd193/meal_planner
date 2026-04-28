@@ -1,6 +1,6 @@
 # Meal Planner App — Progress
 
-## Status: Phase 10 ✅ Complete (Tier 1) — Phase 11 next
+## Status: Phase 11 ✅ Complete — all planned phases done
 
 ---
 
@@ -99,13 +99,13 @@
 - [x] Budget alert: red-tinted warning card when weekly spend > 90% of budget; shows % used and overspend message
 - [ ] Web Push (Tier 2): service worker + push subscription DB table + Vercel cron + profile opt-in
 
-## Phase 11 — Barcode Scanning
-- [ ] Install `@zxing/browser`
-- [ ] `BarcodeScanner` client component — opens camera, decodes barcode, calls lookup
-- [ ] `/api/barcode/[code]` route handler — fetches Open Food Facts API, returns name + macros
-- [ ] Integrate scan button into RecipeForm ingredient rows
-- [ ] Auto-fill ingredient name, unit, and per-unit nutrition from scan result
-- [ ] Fallback UI when camera not available or barcode not in Open Food Facts
+## Phase 11 — Barcode Scanning ✅ Complete
+- [x] Install `@zxing/browser`
+- [x] `BarcodeScanner` client component — opens camera, decodes barcode, calls lookup
+- [x] `/api/barcode/[code]` route handler — fetches Open Food Facts API, returns name + macros
+- [x] Integrate scan button into RecipeForm ingredient rows
+- [x] Auto-fill ingredient name, unit, and per-unit nutrition from scan result
+- [x] Fallback UI when camera not available or barcode not in Open Food Facts
 
 ---
 
