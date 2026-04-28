@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import { deleteRecipe, bulkLogMeals } from '../actions'
 import FavouriteButton from './_components/FavouriteButton'
 import LogToRangeForm from './_components/LogToRangeForm'
+import MacroDonut from './_components/MacroDonut'
 
 function parseSteps(instructions: string): string[] {
   const byNumber = instructions.split(/\n(?=\d+[\.\)]\s)/)
@@ -120,20 +121,37 @@ export default async function RecipeDetailPage({ params }: { params: Promise<{ i
           <section>
             <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4">Per serving</p>
             <div className="bg-card rounded-xl border border-border p-5 space-y-5">
-              <div className="grid grid-cols-5 gap-3">
-                {[
-                  { label: 'kcal', value: totals.kcal_per_serving != null ? Math.round(totals.kcal_per_serving) : null },
-                  { label: 'Protein', value: totals.protein_per_serving_g != null ? `${totals.protein_per_serving_g.toFixed(1)}g` : null },
-                  { label: 'Carbs', value: totals.carbs_per_serving_g != null ? `${totals.carbs_per_serving_g.toFixed(1)}g` : null },
-                  { label: 'Fat', value: totals.fat_per_serving_g != null ? `${totals.fat_per_serving_g.toFixed(1)}g` : null },
-                  { label: 'Cost', value: totals.cost_per_serving != null ? `£${Number(totals.cost_per_serving).toFixed(2)}` : null },
-                ].map(({ label, value }) => (
-                  <div key={label} className="text-center">
-                    <p className="text-lg font-bold">{value ?? '—'}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">{label}</p>
+              {(() => {
+                const p = totals.protein_per_serving_g ?? 0
+                const c = totals.carbs_per_serving_g ?? 0
+                const f = totals.fat_per_serving_g ?? 0
+                const kcal = totals.kcal_per_serving ?? 0
+                const hasBreakdown = p + c + f > 0
+
+                return hasBreakdown ? (
+                  <MacroDonut protein={p} carbs={c} fat={f} kcal={kcal} />
+                ) : (
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      { label: 'kcal', value: kcal ? Math.round(kcal) : null },
+                      { label: 'Cost', value: totals.cost_per_serving != null ? `£${Number(totals.cost_per_serving).toFixed(2)}` : null },
+                    ].map(({ label, value }) => (
+                      <div key={label} className="text-center">
+                        <p className="text-lg font-bold">{value ?? '—'}</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">{label}</p>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                )
+              })()}
+
+              {totals.cost_per_serving != null && (totals.protein_per_serving_g ?? 0) + (totals.carbs_per_serving_g ?? 0) + (totals.fat_per_serving_g ?? 0) > 0 && (
+                <div className="flex items-center gap-2 pt-1 border-t border-border">
+                  <span className="text-xs text-muted-foreground">Cost per serving</span>
+                  <span className="text-sm font-semibold ml-auto">£{Number(totals.cost_per_serving).toFixed(2)}</span>
+                </div>
+              )}
+
               {profile && (() => {
                 const bars = [
                   { label: 'Protein', val: totals.protein_per_serving_g, target: profile.daily_protein },
