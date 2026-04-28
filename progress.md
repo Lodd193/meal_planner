@@ -1,6 +1,6 @@
 # Meal Planner App — Progress
 
-## Status: Phase 9 ✅ Complete — Phase 10 next
+## Status: Phase 10 ✅ Complete (Tier 1) — Phase 11 next
 
 ---
 
@@ -93,12 +93,11 @@
 - [x] `actions.ts` — createRecipe / updateRecipe persist tags array
 - [x] `RecipeForm.tsx` — TagInput wired in, tags included in submit
 
-## Phase 10 — Notifications & Nudges
-- [ ] Dashboard nudge: show banner if no meals logged today
-- [ ] Logging streak: count consecutive days with ≥1 log, display on dashboard
-- [ ] Budget alert: warning card when weekly spend > 90% of weekly_budget
-- [ ] Web Push: service worker + push subscription storage + Vercel cron job
-- [ ] Profile page: opt-in toggle + reminder time picker for push notifications
+## Phase 10 — Notifications & Nudges ✅ Tier 1 Complete
+- [x] Dashboard nudge: dashed-border banner links to today's planner if nothing logged yet
+- [x] Logging streak: consecutive-day counter shown as a pill next to greeting (hidden when 0–1)
+- [x] Budget alert: red-tinted warning card when weekly spend > 90% of budget; shows % used and overspend message
+- [ ] Web Push (Tier 2): service worker + push subscription DB table + Vercel cron + profile opt-in
 
 ## Phase 11 — Barcode Scanning
 - [ ] Install `@zxing/browser`

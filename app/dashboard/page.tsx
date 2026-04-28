@@ -25,7 +25,12 @@ export default async function DashboardPage() {
   // Query from the earlier of weekStart / monthStart
   const queryFrom = weekStart < monthStart ? weekStart : monthStart
 
-  const [{ data: profile }, { data: recentLogs }, { data: recentSpend }] = await Promise.all([
+  // Streak window — 120 days back
+  const streakFrom = new Date(now)
+  streakFrom.setDate(now.getDate() - 120)
+  const streakFromStr = streakFrom.toISOString().slice(0, 10)
+
+  const [{ data: profile }, { data: recentLogs }, { data: recentSpend }, { data: streakLogs }] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', user.id).single(),
     supabase
       .from('meal_logs')
@@ -38,6 +43,11 @@ export default async function DashboardPage() {
       .select('spend_date, amount')
       .eq('user_id', user.id)
       .gte('spend_date', queryFrom),
+    supabase
+      .from('meal_logs')
+      .select('logged_date')
+      .eq('user_id', user.id)
+      .gte('logged_date', streakFromStr),
   ])
 
   const todayLogs = (recentLogs ?? []).filter(l => l.logged_date === today)
@@ -58,6 +68,12 @@ export default async function DashboardPage() {
   const todayCarbs = sum(todayLogs, 'carbs_g')
   const todayFat = sum(todayLogs, 'fat_g')
 
+  const loggedDates = [...new Set((streakLogs ?? []).map(l => l.logged_date))]
+  const streak = calcStreak(loggedDates, today)
+
+  const budgetPct = profile?.weekly_budget ? weekSpend / Number(profile.weekly_budget) : 0
+  const overBudgetAlert = budgetPct > 0.9 && profile?.weekly_budget
+
   const displayName = profile?.display_name ?? user.email?.split('@')[0] ?? 'there'
 
   const macroTargets = [
@@ -71,8 +87,24 @@ export default async function DashboardPage() {
     <main className="p-8 max-w-3xl mx-auto space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Good {getTimeOfDay()}, {displayName}</h1>
-        <p className="text-muted-foreground mt-1 text-sm">Here's your food summary.</p>
+        <div className="flex items-center gap-3 mt-1 flex-wrap">
+          <p className="text-muted-foreground text-sm">Here's your food summary.</p>
+          {streak > 1 && (
+            <span className="text-xs font-medium px-2.5 py-0.5 bg-muted rounded-full text-muted-foreground">
+              {streak}-day streak
+            </span>
+          )}
+        </div>
       </div>
+
+      {/* Today nudge */}
+      {todayLogs.length === 0 && (
+        <Link href={`/planner/${today}`} className="block">
+          <div className="rounded-lg border border-dashed px-4 py-3 text-sm text-muted-foreground hover:border-foreground/30 hover:text-foreground transition-colors">
+            Nothing logged today yet — tap to add your first meal.
+          </div>
+        </Link>
+      )}
 
       {/* Spend stats */}
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
@@ -85,6 +117,17 @@ export default async function DashboardPage() {
           sub={todayLogs.length ? `${todayLogs.length} meal${todayLogs.length !== 1 ? 's' : ''} logged` : 'Nothing logged yet'}
           href={`/planner/${today}`} />
       </div>
+
+      {/* Budget alert */}
+      {overBudgetAlert && (
+        <div className="rounded-lg border px-4 py-3 text-sm" style={{ borderColor: '#c0392b40', background: '#c0392b08' }}>
+          <span className="font-semibold" style={{ color: '#c0392b' }}>Budget alert</span>
+          <span className="text-muted-foreground">
+            {' '}— {Math.round(budgetPct * 100)}% of your £{Number(profile!.weekly_budget).toFixed(2)} weekly budget used.
+            {weekSpend > Number(profile!.weekly_budget) && ' You\'ve exceeded it.'}
+          </span>
+        </div>
+      )}
 
       {/* Macro progress for today */}
       {macroTargets.length > 0 && (
@@ -163,4 +206,16 @@ function getTimeOfDay() {
   if (h < 12) return 'morning'
   if (h < 17) return 'afternoon'
   return 'evening'
+}
+
+function calcStreak(loggedDates: string[], today: string): number {
+  const dateSet = new Set(loggedDates)
+  const cursor = new Date(today + 'T12:00:00')
+  if (!dateSet.has(today)) cursor.setDate(cursor.getDate() - 1)
+  let streak = 0
+  while (dateSet.has(cursor.toISOString().slice(0, 10))) {
+    streak++
+    cursor.setDate(cursor.getDate() - 1)
+  }
+  return streak
 }
