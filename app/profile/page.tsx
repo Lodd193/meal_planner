@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { saveProfile } from './actions'
+import SignOutButton from '@/components/SignOutButton'
 
 export default async function ProfilePage() {
   const supabase = await createClient()
@@ -114,6 +115,10 @@ export default async function ProfilePage() {
 
         <Button type="submit" className="w-full">Save changes</Button>
       </form>
+
+      <div className="md:hidden pt-2 border-t">
+        <SignOutButton variant="page" />
+      </div>
     </main>
   )
 }

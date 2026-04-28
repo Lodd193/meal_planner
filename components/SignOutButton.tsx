@@ -2,7 +2,9 @@
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 
-export default function SignOutButton() {
+type Props = { variant?: 'nav' | 'page' }
+
+export default function SignOutButton({ variant = 'nav' }: Props) {
   const router = useRouter()
 
   async function handleSignOut() {
@@ -10,6 +12,17 @@ export default function SignOutButton() {
     await supabase.auth.signOut()
     router.push('/sign-in')
     router.refresh()
+  }
+
+  if (variant === 'page') {
+    return (
+      <button
+        onClick={handleSignOut}
+        className="w-full text-left px-1 py-2 text-sm text-muted-foreground hover:text-destructive transition-colors"
+      >
+        Sign out
+      </button>
+    )
   }
 
   return (

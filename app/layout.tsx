@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
+import BottomNav from "@/components/BottomNav";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,9 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col pb-16 md:pb-0">
         <NavBar />
         {children}
+        <BottomNav />
       </body>
     </html>
   );

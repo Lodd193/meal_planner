@@ -22,7 +22,7 @@ export default async function NavBar() {
         >
           Meal Planner
         </Link>
-        <div className="flex items-center gap-1">
+        <div className="hidden md:flex items-center gap-1">
           <NavLinks />
           <SignOutButton />
         </div>
