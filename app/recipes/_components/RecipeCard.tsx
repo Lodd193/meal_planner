@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import type { Tables } from '@/types/supabase'
 
-type Props = { recipe: Tables<'recipe_totals'> }
+type Props = { recipe: Tables<'recipe_totals'> & { tags?: string[] } }
 
 export default function RecipeCard({ recipe }: Props) {
   const kcal = recipe.kcal_per_serving != null && recipe.kcal_per_serving > 0
@@ -39,6 +39,15 @@ export default function RecipeCard({ recipe }: Props) {
           )}
           {!kcal && !cost && (
             <p className="text-xs text-muted-foreground/60 italic">No nutrition data yet</p>
+          )}
+          {recipe.tags && recipe.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1 pt-1">
+              {recipe.tags.slice(0, 3).map(tag => (
+                <span key={tag} className="px-2 py-0.5 bg-muted rounded-full text-xs text-muted-foreground">
+                  {tag}
+                </span>
+              ))}
+            </div>
           )}
         </CardContent>
       </Card>

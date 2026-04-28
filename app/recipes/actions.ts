@@ -20,6 +20,7 @@ type IngredientRow = {
 type RecipeInput = {
   title: string
   description?: string
+  tags?: string[]
   servings: number
   prep_time_mins?: number
   cook_time_mins?: number
@@ -61,6 +62,7 @@ export async function createRecipe(input: RecipeInput) {
     .insert({
       title: input.title,
       description: input.description ?? null,
+      tags: input.tags ?? [],
       servings: input.servings,
       prep_time_mins: input.prep_time_mins ?? null,
       cook_time_mins: input.cook_time_mins ?? null,
@@ -104,6 +106,7 @@ export async function updateRecipe(id: string, input: RecipeInput) {
     .update({
       title: input.title,
       description: input.description ?? null,
+      tags: input.tags ?? [],
       servings: input.servings,
       prep_time_mins: input.prep_time_mins ?? null,
       cook_time_mins: input.cook_time_mins ?? null,

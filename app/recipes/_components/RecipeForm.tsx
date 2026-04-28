@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { createRecipe, updateRecipe } from '../actions'
+import TagInput from './TagInput'
 
 type IngredientRow = {
   localId: string
@@ -34,6 +35,7 @@ type Recipe = {
   id: string
   title: string
   description: string | null
+  tags: string[] | null
   servings: number
   prep_time_mins: number | null
   cook_time_mins: number | null
@@ -72,6 +74,7 @@ export default function RecipeForm({ recipe, importedData }: Props) {
   const [cookTime, setCookTime] = useState(String(recipe?.cook_time_mins ?? importedData?.cook_time_mins ?? ''))
   const [instructions, setInstructions] = useState(recipe?.instructions ?? importedData?.instructions ?? '')
   const [sourceUrl, setSourceUrl] = useState(recipe?.source_url ?? importedData?.source_url ?? '')
+  const [tags, setTags] = useState<string[]>(recipe?.tags ?? [])
   const [rows, setRows] = useState<IngredientRow[]>(() => {
     if (recipe?.recipe_ingredients?.length) {
       return recipe.recipe_ingredients.map(ri => ({
@@ -115,6 +118,7 @@ export default function RecipeForm({ recipe, importedData }: Props) {
     const input = {
       title,
       description: description || undefined,
+      tags,
       servings: Number(servings),
       prep_time_mins: prepTime ? Number(prepTime) : undefined,
       cook_time_mins: cookTime ? Number(cookTime) : undefined,
@@ -168,6 +172,7 @@ export default function RecipeForm({ recipe, importedData }: Props) {
             <Input id="cook" type="number" min="0" value={cookTime} onChange={e => setCookTime(e.target.value)} />
           </div>
         </div>
+        <TagInput tags={tags} onChange={setTags} />
         <div className="space-y-1.5">
           <Label htmlFor="source">Source URL</Label>
           <Input id="source" type="url" value={sourceUrl} onChange={e => setSourceUrl(e.target.value)} placeholder="https://..." />

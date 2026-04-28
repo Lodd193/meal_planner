@@ -74,6 +74,15 @@ export default async function RecipeDetailPage({ params }: { params: Promise<{ i
                   {recipe.cook_time_mins} min cook
                 </span>
               )}
+              {(recipe.tags ?? []).map((tag: string) => (
+                <Link
+                  key={tag}
+                  href={`/recipes?tag=${encodeURIComponent(tag)}`}
+                  className="px-3 py-1 bg-muted rounded-full text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {tag}
+                </Link>
+              ))}
             </div>
           </div>
 

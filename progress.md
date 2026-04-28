@@ -1,6 +1,6 @@
 # Meal Planner App — Progress
 
-## Status: Phase 8 ✅ Complete — Phase 9 next
+## Status: Phase 9 ✅ Complete — Phase 10 next
 
 ---
 
@@ -84,13 +84,14 @@
 - [x] `MealLogList.tsx` — optimistic delete (item + totals update instantly)
 - [x] `SpendLogList.tsx` — optimistic delete (item removed immediately)
 
-## Phase 9 — Recipe Tagging & Search
-- [ ] **DB migration:** `alter table recipes add column tags text[] default '{}'; create index recipes_tags_gin on recipes using gin(tags);`
-- [ ] Tag input component (free-text chips with common suggestions) — used in RecipeForm
-- [ ] Tag pills on RecipeCard and recipe detail header
-- [ ] Filter bar on `/recipes` — tag filter + title search, state via URL params
-- [ ] `?tag=X&q=search` query params handled server-side in recipes page
-- [ ] Update `types/supabase.ts` to include `tags` on recipes Row/Insert/Update
+## Phase 9 — Recipe Tagging & Search ✅ Complete
+- [x] DB migration: `tags text[]` column pre-existed; GIN index created
+- [x] `TagInput.tsx` — chip input with Enter/comma/backspace, preset suggestions (Vegetarian, Vegan, High Protein, Quick, etc.)
+- [x] Tag pills on RecipeCard (up to 3) and recipe detail header (all tags, each links to filtered list)
+- [x] `RecipeFilter.tsx` — search input (300ms debounce) + tag pill toggle bar, URL param driven
+- [x] `recipes/page.tsx` — merges tags from `recipes` onto `recipe_totals`, filters server-side by `?tag` and `?q`
+- [x] `actions.ts` — createRecipe / updateRecipe persist tags array
+- [x] `RecipeForm.tsx` — TagInput wired in, tags included in submit
 
 ## Phase 10 — Notifications & Nudges
 - [ ] Dashboard nudge: show banner if no meals logged today
