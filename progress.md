@@ -1,6 +1,6 @@
 # Meal Planner App — Progress
 
-## Status: Phase 13 ✅ Complete — Phases 14–15 next (recipe images, donut chart)
+## Status: Phase 15 ✅ Complete — Phase 14 (recipe images) needs Supabase migration
 
 ---
 
@@ -126,11 +126,11 @@
 - [ ] Cover image on recipe cards (4/3 aspect ratio, fallback placeholder)
 - [ ] Hero image on recipe detail page
 
-## Phase 15 — Macro Donut Chart
-- [ ] Animated SVG donut on recipe detail (protein / carbs / fat split)
-- [ ] Centre label showing kcal per serving
-- [ ] Hover/tap segment shows grams + %
-- [ ] Fallback to plain bars when no macro data
+## Phase 15 — Macro Donut Chart ✅ Complete
+- [x] Pure SVG donut on recipe detail (protein / carbs / fat split)
+- [x] Centre label showing kcal per serving
+- [x] Hover highlights segment arc + legend dot; legend shows grams + %
+- [x] Fallback to kcal+cost grid when only kcal available, not full breakdown
 
 ---
 
