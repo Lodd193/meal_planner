@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { deleteMealLog } from '../actions'
+import EmptyState from '@/components/EmptyState'
 
 type MealLog = {
   id: string
@@ -38,7 +39,13 @@ export default function MealLogList({ logs: initial, date }: { logs: MealLog[]; 
   )
 
   if (!logs.length) {
-    return <p className="text-muted-foreground text-sm">No meals logged for this day yet.</p>
+    return (
+      <EmptyState
+        icon="meals"
+        title="Nothing logged yet"
+        description="Use the form below to log your first meal for this day."
+      />
+    )
   }
 
   return (

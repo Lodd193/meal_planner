@@ -1,14 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
 import SignOutButton from './SignOutButton'
-
-const navLinks = [
-  { href: '/recipes', label: 'Recipes' },
-  { href: '/planner', label: 'Planner' },
-  { href: '/shopping-list', label: 'Shopping' },
-  { href: '/spend-log', label: 'Spend' },
-  { href: '/profile', label: 'Profile' },
-]
+import NavLinks from './NavLinks'
 
 export default async function NavBar() {
   const supabase = await createClient()
@@ -29,19 +22,10 @@ export default async function NavBar() {
         >
           Meal Planner
         </Link>
-        <nav className="flex items-center gap-1">
-          {navLinks.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className="px-3 py-1.5 rounded-full text-sm transition-all duration-200 hover:bg-white/10"
-              style={{ color: '#E0DDCF' }}
-            >
-              {label}
-            </Link>
-          ))}
+        <div className="flex items-center gap-1">
+          <NavLinks />
           <SignOutButton />
-        </nav>
+        </div>
       </div>
     </header>
   )

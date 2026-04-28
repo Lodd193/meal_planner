@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 import RecipeCard from './_components/RecipeCard'
 import RecipeFilter from './_components/RecipeFilter'
+import EmptyState from '@/components/EmptyState'
 
 export default async function RecipesPage({
   searchParams,
@@ -49,9 +50,21 @@ export default async function RecipesPage({
       <RecipeFilter allTags={allTags} activeTag={activeTag} activeQ={activeQ} />
 
       {!recipes.length ? (
-        <p className="text-muted-foreground">
-          {activeTag || activeQ ? 'No recipes match this filter.' : 'No recipes yet — add your first one!'}
-        </p>
+        activeTag || activeQ ? (
+          <EmptyState
+            icon="recipes"
+            title="No recipes match"
+            description="Try clearing the search or removing the tag filter."
+          />
+        ) : (
+          <EmptyState
+            icon="recipes"
+            title="No recipes yet"
+            description="Add your first recipe manually or import one from a URL or file."
+            href="/recipes/new"
+            cta="+ New Recipe"
+          />
+        )
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {recipes.map(r => (

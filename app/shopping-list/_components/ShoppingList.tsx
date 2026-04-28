@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import type { ShoppingItem } from '../page'
+import EmptyState from '@/components/EmptyState'
 
 const CATEGORY_ORDER = [
   'produce', 'vegetable', 'fruit',
@@ -95,11 +96,7 @@ export default function ShoppingList({
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-semibold">Shopping List</h1>
-          {allItems.length === 0 ? (
-            <p className="text-sm text-muted-foreground mt-0.5">
-              No items — add some below or log meals with recipes
-            </p>
-          ) : (
+          {allItems.length > 0 && (
             <>
               <p className="text-sm text-muted-foreground mt-0.5">
                 {remaining} of {allItems.length} item{allItems.length !== 1 ? 's' : ''} remaining
@@ -125,11 +122,13 @@ export default function ShoppingList({
       </div>
 
       {allItems.length === 0 ? (
-        <Card>
-          <CardContent className="py-8 text-center text-sm text-muted-foreground">
-            Log meals with recipes in your diary to auto-populate your shopping list.
-          </CardContent>
-        </Card>
+        <EmptyState
+          icon="shopping"
+          title="Your list is empty"
+          description="Log meals with recipes in your diary and they'll appear here automatically."
+          href="/planner"
+          cta="Open Meal Diary"
+        />
       ) : (
         <div className="space-y-5">
           {sortedCats.map(([cat, catItems]) => (
