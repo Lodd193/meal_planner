@@ -1,6 +1,6 @@
 # Meal Planner App — Progress
 
-## Status: Phase 11 ✅ Complete — all planned phases done
+## Status: Phase 11 ✅ Complete — Phases 12–15 planned (UX & visual enhancements)
 
 ---
 
@@ -106,6 +106,29 @@
 - [x] Integrate scan button into RecipeForm ingredient rows
 - [x] Auto-fill ingredient name, unit, and per-unit nutrition from scan result
 - [x] Fallback UI when camera not available or barcode not in Open Food Facts
+
+## Phase 12 — Quick Wins (Polish)
+- [ ] Active nav highlighting — current route indicator in NavBar
+- [ ] Empty states — illustrations + CTA on recipes list, day view, shopping list
+- [ ] Smooth page transitions — Next.js View Transitions API
+
+## Phase 13 — Mobile Bottom Nav
+- [ ] Fixed bottom tab bar on mobile (Recipes / Planner / Spend / Profile + icons)
+- [ ] Top nav hidden on mobile, bottom nav hidden on desktop
+- [ ] Active tab detection via usePathname()
+
+## Phase 14 — Recipe Images
+- [ ] DB migration: `cover_image_url` column on `recipes`
+- [ ] Supabase Storage bucket `recipe-images` with RLS
+- [ ] Image upload in RecipeForm with client-side preview
+- [ ] Cover image on recipe cards (4/3 aspect ratio, fallback placeholder)
+- [ ] Hero image on recipe detail page
+
+## Phase 15 — Macro Donut Chart
+- [ ] Animated SVG donut on recipe detail (protein / carbs / fat split)
+- [ ] Centre label showing kcal per serving
+- [ ] Hover/tap segment shows grams + %
+- [ ] Fallback to plain bars when no macro data
 
 ---
 

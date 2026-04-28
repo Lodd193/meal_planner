@@ -107,12 +107,39 @@ RLS enabled on all user-scoped tables.
 - Web Push notifications (service worker + Vercel cron) — opt-in reminder at user-chosen time (e.g. 7pm "Don't forget to log dinner")
 - Budget alert: dashboard warning when weekly spend exceeds 90% of budget
 
-### Phase 11 — Barcode Scanning
+### Phase 11 — Barcode Scanning ✅ Complete
 - Barcode scan button on each ingredient row in RecipeForm — opens camera via Web API
 - `@zxing/browser` for camera-based barcode decoding (no native app needed)
 - Open Food Facts API lookup by barcode → ingredient name + per-100g macros
 - Auto-fills ingredient name, unit (g/ml), and nutrition fields; user adjusts quantity
 - Graceful fallback to manual entry if camera unavailable or barcode not found
+
+### Phase 12 — Quick Wins (Polish)
+- **Active nav highlighting** — current route gets a visual indicator in the NavBar (underline or lightened pill); uses `usePathname()` in a client wrapper
+- **Empty states** — replace plain text "no recipes / nothing logged" messages with SVG illustration + CTA button; affects recipes list, day view, shopping list
+- **Smooth page transitions** — Next.js View Transitions API (`viewTransition: true` in next.config); one-line change, native-app feel between routes
+
+### Phase 13 — Mobile Bottom Nav
+- Fixed bottom tab bar replacing (or supplementing) the top nav on small screens
+- Tabs: Recipes / Planner / Spend / Profile — each with a small icon + label
+- Hides on desktop (`md:hidden`), top nav hides on mobile (`hidden md:flex`)
+- Active tab highlighted; uses `usePathname()` for current route detection
+- Planner tab deep-links to today's date
+
+### Phase 14 — Recipe Images
+- Add `cover_image_url text` column to `recipes` table (Supabase migration)
+- Supabase Storage bucket `recipe-images` (private, user-scoped RLS policy)
+- Image upload input on RecipeForm — client-side preview before submit, upload on save
+- Recipe cards show cover image (aspect-ratio 4/3, object-cover) with fallback to coloured placeholder
+- Recipe detail page shows full-width hero image in header
+- Optional: auto-fetch OG image from `source_url` during URL import
+
+### Phase 15 — Macro Donut on Recipe Detail
+- Replace plain progress bars on recipe detail with an animated SVG donut chart
+- Shows protein / carbs / fat split as coloured arc segments
+- Centre label shows total kcal per serving
+- Hover/tap on a segment shows grams + % of total macros
+- Falls back to plain bars if no macro data
 
 ---
 
