@@ -1,6 +1,6 @@
 # Meal Planner App — Progress
 
-## Status: Phase 11 ✅ Complete — Phases 12–15 planned (UX & visual enhancements)
+## Status: Phase 12 ✅ Complete — Phases 13–15 next (mobile nav, images, donut chart)
 
 ---
 
@@ -107,10 +107,10 @@
 - [x] Auto-fill ingredient name, unit, and per-unit nutrition from scan result
 - [x] Fallback UI when camera not available or barcode not in Open Food Facts
 
-## Phase 12 — Quick Wins (Polish)
-- [ ] Active nav highlighting — current route indicator in NavBar
-- [ ] Empty states — illustrations + CTA on recipes list, day view, shopping list
-- [ ] Smooth page transitions — Next.js View Transitions API
+## Phase 12 — Quick Wins (Polish) ✅ Complete
+- [x] Active nav highlighting — NavLinks client component, usePathname() pill highlight
+- [x] Empty states — SVG illustration + CTA on recipes list, day view (meals), shopping list
+- [x] Smooth page transitions — experimental.viewTransition: true in next.config
 
 ## Phase 13 — Mobile Bottom Nav
 - [ ] Fixed bottom tab bar on mobile (Recipes / Planner / Spend / Profile + icons)
