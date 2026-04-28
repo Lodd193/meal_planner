@@ -72,7 +72,7 @@ export default function BottomNav() {
         paddingBottom: 'env(safe-area-inset-bottom)',
       }}
     >
-      <div className="flex items-stretch h-16">
+      <div className="flex">
         {tabs.map(({ href, label, icon, todayHref }) => {
           const active = pathname === href || pathname.startsWith(href + '/')
           const dest = todayHref ? `/planner/${today()}` : href
@@ -80,7 +80,7 @@ export default function BottomNav() {
             <Link
               key={href}
               href={dest}
-              className="flex-1 flex flex-col items-center justify-center gap-1.5 transition-opacity"
+              className="flex-1 flex flex-col items-center justify-center gap-1.5 py-3.5 transition-opacity"
               style={{ color: active ? '#E0DDCF' : 'rgba(224,221,207,0.4)' }}
             >
               <span>{icon}</span>
