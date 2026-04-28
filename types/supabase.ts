@@ -1,4 +1,4 @@
-export type Json =
+﻿export type Json =
   | string
   | number
   | boolean
@@ -37,6 +37,69 @@ export type Database = {
           unit?: string
         }
         Relationships: []
+      }
+      meal_logs: {
+        Row: {
+          carbs_g: number | null
+          created_at: string | null
+          custom_name: string | null
+          fat_g: number | null
+          id: string
+          kcal: number | null
+          logged_date: string
+          meal_type: string
+          notes: string | null
+          protein_g: number | null
+          recipe_id: string | null
+          total_cost: number | null
+          user_id: string
+        }
+        Insert: {
+          carbs_g?: number | null
+          created_at?: string | null
+          custom_name?: string | null
+          fat_g?: number | null
+          id?: string
+          kcal?: number | null
+          logged_date: string
+          meal_type?: string
+          notes?: string | null
+          protein_g?: number | null
+          recipe_id?: string | null
+          total_cost?: number | null
+          user_id: string
+        }
+        Update: {
+          carbs_g?: number | null
+          created_at?: string | null
+          custom_name?: string | null
+          fat_g?: number | null
+          id?: string
+          kcal?: number | null
+          logged_date?: string
+          meal_type?: string
+          notes?: string | null
+          protein_g?: number | null
+          recipe_id?: string | null
+          total_cost?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meal_logs_recipe_id_fkey"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipe_totals"
+            referencedColumns: ["recipe_id"]
+          },
+          {
+            foreignKeyName: "meal_logs_recipe_id_fkey"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       meal_plan_entries: {
         Row: {
@@ -393,6 +456,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      spend_logs: {
+        Row: {
+          amount: number
+          category: string | null
+          created_at: string | null
+          description: string
+          id: string
+          spend_date: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          category?: string | null
+          created_at?: string | null
+          description: string
+          id?: string
+          spend_date: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          category?: string | null
+          created_at?: string | null
+          description?: string
+          id?: string
+          spend_date?: string
+          user_id?: string
+        }
+        Relationships: []
       }
     }
     Views: {
