@@ -3,8 +3,6 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-const today = () => new Date().toISOString().slice(0, 10)
-
 const tabs = [
   {
     href: '/recipes',
@@ -19,8 +17,7 @@ const tabs = [
   },
   {
     href: '/planner',
-    label: 'Planner',
-    todayHref: true,
+    label: 'Diary',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
@@ -73,9 +70,9 @@ export default function BottomNav() {
       }}
     >
       <div className="flex">
-        {tabs.map(({ href, label, icon, todayHref }) => {
+        {tabs.map(({ href, label, icon }) => {
           const active = pathname === href || pathname.startsWith(href + '/')
-          const dest = todayHref ? `/planner/${today()}` : href
+          const dest = href
           return (
             <Link
               key={href}
